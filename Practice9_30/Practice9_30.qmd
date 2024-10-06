@@ -1,0 +1,30 @@
+---
+title: "Practice9_30"
+author: "Enoc De Jesus"
+date: "2024-09-30"
+date-format: "MMMM D, YYYY"
+
+---
+
+## Quarto
+
+# Basic Heading for Quarto
+*Using italic here* and ~~this is using strikethrough~~
+```{python}
+#| echo: true
+#| eval: true
+#| fig-cap: "Sine function"
+#| label: fig-sine
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x= np.linspace(0,10,100)
+y= np.sin(x)
+
+plt.plot(x,y)
+plt.title("Sine function")
+plt.show()
+
+```
+

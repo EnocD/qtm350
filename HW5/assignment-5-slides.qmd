@@ -1,0 +1,191 @@
+---
+title: "World Development Analysis Slides"
+author: Enoc De Jesus
+date: 2024-10-06
+format:
+  revealjs:
+    slide-level: 2
+    theme: serif
+    transition: slide
+---
+
+
+# Data and Statistics
+Analysis between GDP per Capita, Adult Literacy Rate, and Measles Immunization by Country.
+
+```{python}
+#| echo: false
+#Import Libaries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+```{python}
+#| echo: false
+df= pd.read_csv('wdi.csv')
+df.columns
+
+gdp_stats = df['gdp_per_capita'].describe()
+gdp_null = df['gdp_per_capita'].isnull().sum()
+
+literacy_stats = df['adult_literacy_rate'].describe()
+literacy_null = df['adult_literacy_rate'].isnull().sum()
+
+measles_stats = df['measles_immunisation_rate'].describe()
+measles_null = df['measles_immunisation_rate'].isnull().sum()
+```
+
+# Descriptive Analysis
+## Descriptive Statistics: GDP Per Capita {transition="fade"}
+
+The mean gpd per capita per country is $20,345 with a standard deviation of $31,308. The median is $7,587 and the max is $240,862. This tells us the data is very right skewed, and there is a lot of deviation for gpd per capita by country.
+```{python}
+gdp_stats
+```
+
+Only 14 countries have no data on GDP per capita, meaning our data is a good estimator for all countries.
+```{python}
+gdp_null
+```
+
+## Descriptive Statistics: Literacy Rate
+
+We see here that the mean is 80% and median 84%, max is almost 100% for literacy rate of a country.
+```{python}
+literacy_stats
+```
+
+But the number of countries that don't have data is 168, telling us the data could be biased towards countries that have resources to conduct these tests, which could lead to literacy rates higher than the true rate. The data is not a good estimator for all countries. 
+```{python}
+literacy_null
+```
+
+## Descriptive Statistics: Measles Immunization Rate
+We see here the mean measles immunization rate per country is 84%, the median is 90%, the max is 99%. The data is left skewed.
+```{python}
+measles_stats
+```
+
+We also see here only 24 countries have not reported data on their rates. A bit higher than we want, but the data is a decent estimator for all countries.
+```{python}
+measles_null
+```
+
+# Visualizations
+## Country and GDP per Capita
+```{python}
+#| fig-cap: "Country and GDP per Capita"
+#| echo: false
+#| label: fig-gdp
+#| warning: false
+plt.hist(df['gdp_per_capita'], 50, color="violet")
+plt.title("Relationship between Country and GDP per Capita")
+plt.ylabel("Count")
+plt.xlabel("GDP per Capita")
+plt.axvline(x=gdp_stats[1], linestyle='--', label= "Mean", color = 'red')
+plt.axvline(x=gdp_stats[5], linestyle='--', label= "Median", color= 'green')
+plt.legend()
+plt.show()
+```
+
+## Country and Adult Literacy Rate 
+```{python}
+#| fig-cap: "Country and Literacy Rate"
+#| echo: false
+#| label: fig-literacy
+#| warning: false
+plt.hist(df['adult_literacy_rate'], 50, color="turquoise")
+plt.title("Relationship between Country and Adult Literacy Rate")
+plt.ylabel("Count")
+plt.xlabel("Adult Literacy Rate")
+plt.axvline(x=literacy_stats[1], linestyle='--', label= "Mean", color = 'red')
+plt.axvline(x=literacy_stats[5], linestyle='--', label= "Median", color= 'green')
+plt.legend()
+plt.show()
+```
+
+
+## Country and Measles Immunization Rate  
+```{python}
+#| fig-cap: "Country and Measles Immunization Rate"
+#| echo: false
+#| label: fig-measles
+#| warning: false
+plt.hist(df['measles_immunisation_rate'], 50, color="peru")
+plt.title("Relationship between Country and Measles Immunization Rate")
+plt.ylabel("Count")
+plt.xlabel("Measles Immunization Rate")
+plt.axvline(x=measles_stats[1], linestyle='--', label= "Mean", color = 'red')
+plt.axvline(x=measles_stats[5], linestyle='--', label= "Median", color= 'green')
+plt.legend()
+plt.show()
+```
+
+## GDP per Capita and Literacy Rate
+```{python}
+#| fig-cap: "Relationship between GDP Per Capita and Literacy Rate"
+#| echo: false
+#| label: fig-gdp-lit
+plt.scatter(df['gdp_per_capita'], df['adult_literacy_rate'])
+plt.title("GDP Per Capita vs Adult Literacy Rate")
+plt.ylabel("Adult Literacy Rate")
+plt.xlabel("GDP Per Capita")
+plt.show()
+```
+
+## GDP per Capita and Measles Immunization Rate
+```{python}
+#| fig-cap: "Relationship between GDP per Capita and Measles Immunization Rate"
+#| echo: false
+#| label: fig-gdp-measles
+plt.scatter(df['gdp_per_capita'], df['measles_immunisation_rate'])
+plt.title("GDP Per Capita vs Measles Immunization Rate")
+plt.ylabel("Measles Immunization Rate")
+plt.xlabel("GDP Per Capita")
+plt.show()
+```
+
+## Adult Literacy Rate and Measles Immunization Rate
+```{python}
+#| fig-cap: "Relationship between Literacy Rate and Measles Immunization Rate"
+#| echo: false
+#| label: fig-lit-measles
+plt.scatter(df['adult_literacy_rate'], df['measles_immunisation_rate'])
+plt.title("Adult Literacy Rate vs Measles Immunization Rate")
+plt.ylabel("Measles Immunization Rate")
+plt.xlabel("Adult Literacy Rate")
+plt.show()
+```
+## Source and Links
+- **Source**: World Development Indicators (2022)
+- **Link**: https://databank.worldbank.org/source/world-development-indicators
+
+## Key Statistics
+From our analysis between Country and GDP per Capita, Literacy Rate, and Measles Immunization Rate for [@fig-gdp;@fig-literacy; @fig-measles], we have:
+
+| Type | Mean | Median | Max | SD |
+|------|------|--------|-----|----|
+| GDP Per Capita | 20345.7 | 7587.6 | 240862.2| 31309.0 |
+| Literacy Rate | 79.6 | 83.8 | 100 | 19.4 |
+| Immunization Rate | 83.6 | 90.0 | 99.0 | 16.0 |
+
+```{python}
+#| echo: false
+corr_gdp_lit = df['gdp_per_capita'].corr(df['adult_literacy_rate'])
+corr_gdp_mea = df['gdp_per_capita'].corr(df["measles_immunisation_rate"])
+corr_lit_mea= df['adult_literacy_rate'].corr(df['measles_immunisation_rate'])
+
+```
+
+## Key Statistics (2)
+We can also find the correlation between the variables of the last 3 plots for [@fig-gdp-lit; @fig-gdp-measles;@fig-lit-measles] :
+```{python}
+#| echo: false
+corr_data = {'Relationship': ['GDP per Capita and Literacy Rate', 'GDP per Capita and Measles Immunization Rate', 'Literacy Rate and Measles Immunization Rate'], 
+ 'Correlation': [corr_gdp_lit,corr_gdp_mea,corr_lit_mea]
+}
+corr_df = pd.DataFrame(corr_data)
+corr_df
+```
+We see that the correlation is not that high for any, but they have a weak positive correlation. 

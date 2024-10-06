@@ -1,0 +1,57 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Practice9_30\"\n",
+        "author: \"Enoc De Jesus\"\n",
+        "date: \"2024-09-30\"\n",
+        "date-format: \"MMMM D, YYYY\"\n",
+        "\n",
+        "---\n",
+        "\n",
+        "\n",
+        "## Quarto\n",
+        "\n",
+        "# Basic Heading for Quarto\n",
+        "*Using italic here* and ~~this is using strikethrough~~"
+      ],
+      "id": "c51954cf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: true\n",
+        "#| eval: true\n",
+        "#| fig-cap: Sine function\n",
+        "#| label: fig-sine\n",
+        "\n",
+        "import matplotlib.pyplot as plt\n",
+        "import numpy as np\n",
+        "\n",
+        "x= np.linspace(0,10,100)\n",
+        "y= np.sin(x)\n",
+        "\n",
+        "plt.plot(x,y)\n",
+        "plt.title(\"Sine function\")\n",
+        "plt.show()"
+      ],
+      "id": "fig-sine",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\enocd\\AppData\\Roaming\\Python\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
